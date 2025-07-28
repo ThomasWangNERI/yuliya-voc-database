@@ -83,14 +83,20 @@
             */
             
             function searchCSV() {
-              const query = document.getElementById('searchInput').value.toLowerCase();
+              const query = document.getElementById('searchInput').value
+                .toLowerCase()
+                .replace(/[\u200B-\u200D\uFEFF]/g, '')
+                .trim();
               const resultsDiv = document.getElementById('results');
               resultsDiv.innerHTML = '';
             
               if (!query) return;
             
               const filtered = csvData.filter(row =>
-                (row['Compound'] ?? '').toLowerCase() === query
+                ((row['Compound'] ?? '')
+                  .toLowerCase()
+                  .replace(/[\u200B-\u200D\uFEFF]/g, '')
+                  .trim() === query)
               );
             
               if (filtered.length === 0) {
