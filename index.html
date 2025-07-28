@@ -63,7 +63,9 @@
                 csvData = lines.slice(1).map(line => {
                     const values = line.split(',');
                     const entry = {};
-                    headers.forEach((h, i) => entry[h.trim()] = values[i]?.trim());
+                    headers.forEach((h, i) => {
+                      entry[h.trim()] = (values[i] ?? "").trim();
+                    });
                     return entry;
                 });
             }
@@ -76,7 +78,7 @@
                 if (!query) return;
 
                 const filtered = csvData.filter(row =>
-                    Object.values(row).some(val => val.toLowerCase().includes(query))
+                    Object.values(row).some(val => (val ?? "").toLowerCase().includes(query))
                 );
 
                 if (filtered.length === 0) {
