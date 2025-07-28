@@ -55,6 +55,7 @@
                 const response = await fetch(CSV_URL);
                 const text = await response.text();
                 parseCSV(text);
+                console.log(csvData);
             }
 
             function parseCSV(text) {
