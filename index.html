@@ -90,7 +90,7 @@
               if (!query) return;
             
               const filtered = csvData.filter(row =>
-                (row['Compound'] ?? '').toLowerCase().includes(query)
+                (row['Compound'] ?? '').toLowerCase() === query
               );
             
               if (filtered.length === 0) {
