@@ -71,43 +71,43 @@
             }
 
             function searchCSV() {
-                const query = document.getElementById('searchInput').value.toLowerCase();
-                const resultsDiv = document.getElementById('results');
-                resultsDiv.innerHTML = '';
-
-                if (!query) return;
-
-                const filtered = csvData.filter(row =>
-                    Object.values(row).some(val => (val ?? "").toLowerCase().includes(query))
-                );
-
-                if (filtered.length === 0) {
-                    resultsDiv.innerHTML = '<p>No results found.</p>';
-                    return;
-                }
-
-                const table = document.createElement('table');
-                const headerRow = document.createElement('tr');
-
-                Object.keys(filtered[0]).forEach(key => {
-                    const th = document.createElement('th');
-                    th.textContent = key;
-                    headerRow.appendChild(th);
+              const query = document.getElementById('searchInput').value.toLowerCase();
+              const resultsDiv = document.getElementById('results');
+              resultsDiv.innerHTML = '';
+            
+              if (!query) return;
+            
+              const filtered = csvData.filter(row =>
+                (row['Compound'] ?? '').toLowerCase().includes(query)
+              );
+            
+              if (filtered.length === 0) {
+                resultsDiv.innerHTML = '<p>No results found.</p>';
+                return;
+              }
+            
+              const table = document.createElement('table');
+              const headerRow = document.createElement('tr');
+            
+              // Get column headers from the first matching row
+              Object.keys(filtered[0]).forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key;
+                headerRow.appendChild(th);
+              });
+              table.appendChild(headerRow);
+            
+              filtered.forEach(row => {
+                const tr = document.createElement('tr');
+                Object.values(row).forEach(val => {
+                  const td = document.createElement('td');
+                  td.textContent = val ?? '';
+                  tr.appendChild(td);
                 });
-
-                table.appendChild(headerRow);
-
-                filtered.forEach(row => {
-                    const tr = document.createElement('tr');
-                    Object.values(row).forEach(val => {
-                    const td = document.createElement('td');
-                    td.textContent = val;
-                    tr.appendChild(td);
-                    });
-                    table.appendChild(tr);
-                });
-
-                resultsDiv.appendChild(table);
+                table.appendChild(tr);
+              });
+            
+              resultsDiv.appendChild(table);
             }
 
             fetchCSV();
