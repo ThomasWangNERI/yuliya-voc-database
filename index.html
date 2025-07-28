@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Prof Yu Liya Group Odour Database Search</title>
+        <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
         <style>
             body {
             font-family: Arial, sans-serif;
@@ -51,11 +52,20 @@
 
             let csvData = [];
 
+            Papa.parse(CSV_URL, {
+              download: true,
+              header: true,
+              skipEmptyLines: true,
+              complete: function(results) {
+                csvData = results.data;
+              }
+            });
+            
+            /*
             async function fetchCSV() {
                 const response = await fetch(CSV_URL);
                 const text = await response.text();
                 parseCSV(text);
-                console.log(csvData);
             }
 
             function parseCSV(text) {
@@ -70,7 +80,8 @@
                     return entry;
                 });
             }
-
+            */
+            
             function searchCSV() {
               const query = document.getElementById('searchInput').value.toLowerCase();
               const resultsDiv = document.getElementById('results');
@@ -111,7 +122,7 @@
               resultsDiv.appendChild(table);
             }
 
-            fetchCSV();
+            /*fetchCSV();*/
         </script>
     </body>
 </html>
